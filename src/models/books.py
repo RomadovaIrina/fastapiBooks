@@ -18,5 +18,5 @@ class Book(BaseModel):
     ForeignKey("sellers_table.id", ondelete="CASCADE"),
     nullable=True
 )
-    seller: Mapped["Seller"] = relationship(back_populates="seller_books", lazy="selectin")
-
+    
+    seller: Mapped["Seller"] = relationship(back_populates="seller_books", lazy="selectin") # type: ignore

@@ -21,7 +21,7 @@ class IncomingSeller(BaseSeller):
 
 class ReturnedSeller(BaseSeller):
     id: int
-    books: list[ReturnedBook] = Field(default_factory=list)
+    books: list[ReturnedBook] = [] 
     
     @model_serializer
     def hide_password(self):
