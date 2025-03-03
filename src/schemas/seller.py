@@ -34,7 +34,6 @@ class ReturnedSeller(BaseSeller):
         }
     
     class Config:
-        from_attributes = True
         exclude = {"password"}
 
 

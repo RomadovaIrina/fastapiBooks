@@ -7,6 +7,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Response, status
 from sqlalchemy import select
 from src.models.books import Book
+from src.models.seller import Seller
 from src.schemas import IncomingBook, ReturnedAllbooks, ReturnedBook
 from icecream import ic
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -45,6 +46,8 @@ async def create_book(
     await session.flush()
 
     return new_book
+
+
 
 
 # Ручка, возвращающая все книги

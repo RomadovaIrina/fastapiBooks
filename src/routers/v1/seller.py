@@ -46,6 +46,10 @@ async def get_sellers(session: DBSession):
     return {"sellers": sellers}
 
 
+
+
+
+
 # Получаем одного пользователя
 @seller_router.get("/{seller_id}", response_model=ReturnedSeller)
 async def get_seller(seller_id: int, session: DBSession):
@@ -53,6 +57,7 @@ async def get_seller(seller_id: int, session: DBSession):
         return result
 
     return Response(status_code=status.HTTP_404_NOT_FOUND)
+
 
 
 # Обновляем дааные продавца
