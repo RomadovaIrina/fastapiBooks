@@ -26,5 +26,6 @@ class Seller(BaseModel):
         back_populates="seller", 
         cascade="all, delete-orphan",
         passive_deletes=True,
-        single_parent=True
+        single_parent=True,
+        lazy="selectin"
     )

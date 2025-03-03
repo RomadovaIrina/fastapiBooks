@@ -21,7 +21,7 @@ class IncomingSeller(BaseSeller):
 
 class ReturnedSeller(BaseSeller):
     id: int
-    books: list[ReturnedBook] = [] 
+    books: list[ReturnedBook] = Field(default_factory=list)
     
     @model_serializer
     def hide_password(self):
@@ -30,12 +30,13 @@ class ReturnedSeller(BaseSeller):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "e_mail": self.e_mail,
-            "books": self.books
+            "seller_books": self.books
         }
     
     class Config:
         from_attributes = True
         exclude = {"password"}
+
 
 
     
