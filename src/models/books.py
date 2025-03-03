@@ -17,6 +17,6 @@ class Book(BaseModel):
     seller_id: Mapped[int] = mapped_column(
     ForeignKey("sellers_table.id", ondelete="CASCADE"),
     nullable=True
-)
+    )
     
-    seller: Mapped["Seller"] = relationship(back_populates="seller_books", lazy="selectin") # type: ignore
+    seller: Mapped["Seller"] = relationship(back_populates="seller_books", lazy="selectin")# type: ignore

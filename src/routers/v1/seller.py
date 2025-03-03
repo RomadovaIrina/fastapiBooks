@@ -33,7 +33,13 @@ async def register_seller(
     session.add(new_seller)
     await session.flush()
 
-    return new_seller
+    return ReturnedSeller(
+        id=new_seller.id,
+        first_name=new_seller.first_name,
+        last_name=new_seller.last_name,
+        e_mail=new_seller.e_mail,
+        books=[]
+    )
 
 
 # Получаем всех пользователей
@@ -43,6 +49,8 @@ async def get_sellers(session: DBSession):
     result = await session.execute(query)
     sellers = result.scalars().all()
     ic(sellers)
+    for i in sellers:
+        print(len(i.seller_books))
     return {"sellers": sellers}
 
 

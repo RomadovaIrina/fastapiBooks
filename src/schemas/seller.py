@@ -19,9 +19,26 @@ class IncomingSeller(BaseSeller):
     pass
 
 
+# class ReturnedSeller(BaseSeller):
+#     id: int
+#     books: list[ReturnedBook] = [] 
+    
+#     @model_serializer
+#     def hide_password(self):
+#         return {
+#             "id": self.id,
+#             "first_name": self.first_name,
+#             "last_name": self.last_name,
+#             "e_mail": self.e_mail,
+#             "seller_books": self.books
+#         }
+    
+#     class Config:
+#         exclude = {"password"}
+
 class ReturnedSeller(BaseSeller):
     id: int
-    books: list[ReturnedBook] = [] 
+    seller_books: list[ReturnedBook] = []  # Убедитесь, что поле не пустое
     
     @model_serializer
     def hide_password(self):
@@ -30,11 +47,8 @@ class ReturnedSeller(BaseSeller):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "e_mail": self.e_mail,
-            "seller_books": self.books
+            "books": self.seller_books  # Убедитесь, что это поле правильно сериализуется
         }
-    
-    class Config:
-        exclude = {"password"}
 
 
 
