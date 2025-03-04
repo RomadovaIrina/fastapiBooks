@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import field_validator,\
     field_serializer, BaseModel, EmailStr, Field, model_serializer
 from pydantic_core import PydanticCustomError
@@ -16,25 +17,9 @@ class BaseSeller(BaseModel):
 class IncomingSeller(BaseSeller):
     password: str = Field(..., max_length=100)
     #тут мы регистрируем юзера типа
-    pass
 
 
-# class ReturnedSeller(BaseSeller):
-#     id: int
-#     books: list[ReturnedBook] = [] 
-    
-#     @model_serializer
-#     def hide_password(self):
-#         return {
-#             "id": self.id,
-#             "first_name": self.first_name,
-#             "last_name": self.last_name,
-#             "e_mail": self.e_mail,
-#             "seller_books": self.books
-#         }
-    
-#     class Config:
-#         exclude = {"password"}
+
 
 class ReturnedSeller(BaseSeller):
     id: int
@@ -49,7 +34,10 @@ class ReturnedSeller(BaseSeller):
             "e_mail": self.e_mail,
             "books": self.seller_books  # Убедитесь, что это поле правильно сериализуется
         }
+    
 
+class EditSeller(BaseSeller):
+    pass
 
 
     

@@ -19,7 +19,7 @@ class Seller(BaseModel):
     id: Mapped[int] = mapped_column(primary_key=True)
     first_name: Mapped[str] = mapped_column(String(100), nullable=False)
     last_name: Mapped[str] = mapped_column(String(100), nullable=False)
-    e_mail: Mapped[str] = mapped_column(String(100), nullable=False)
+    e_mail: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(100), nullable=False)
 
     seller_books: Mapped[list["Book"]] = relationship(

@@ -6,7 +6,7 @@ from icecream import ic
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.configurations import get_async_session
-from src.schemas.seller import ReturnedSeller, IncomingSeller,\
+from src.schemas.seller import EditSeller, ReturnedSeller, IncomingSeller,\
     ReturnedAllSellers
 
 
@@ -48,9 +48,6 @@ async def get_sellers(session: DBSession):
     query = select(Seller).options(selectinload(Seller.seller_books))
     result = await session.execute(query)
     sellers = result.scalars().all()
-    ic(sellers)
-    for i in sellers:
-        print(len(i.seller_books))
     return {"sellers": sellers}
 
 
@@ -58,20 +55,69 @@ async def get_sellers(session: DBSession):
 
 
 
-# Получаем одного пользователя
+# # Получаем одного пользователя
+# @seller_router.get("/{seller_id}", response_model=ReturnedSeller)
+# async def get_seller(seller_id: int, session: DBSession):
+#     seller = await session.execute(
+#         select(Seller)
+#         .options(selectinload(Seller.seller_books))
+#     )
+#     if seller:
+#         return seller
+
+#     return Response(status_code=status.HTTP_404_NOT_FOUND)
+
 @seller_router.get("/{seller_id}", response_model=ReturnedSeller)
 async def get_seller(seller_id: int, session: DBSession):
-    if result := await session.get(Seller, seller_id):
-        return result
-
+    result = await session.execute(
+        select(Seller)
+        .options(selectinload(Seller.seller_books))
+        .filter(Seller.id == seller_id) 
+    )
+    seller = result.scalar_one_or_none()  # Получаем одного продавца, либо None, если не найден
+    if seller:
+        return ReturnedSeller(
+            id=seller.id,
+            first_name=seller.first_name,
+            last_name=seller.last_name,
+            e_mail=seller.e_mail,
+            books=seller.seller_books
+        )
     return Response(status_code=status.HTTP_404_NOT_FOUND)
 
 
-
 # Обновляем дааные продавца
-@seller_router.put("/{seller_id}",)
-async def update_seller(book_id: int,session: DBSession):
-    pass
+@seller_router.put("/{seller_id}", response_model=ReturnedSeller)
+async def update_seller(
+    seller_id: int,
+    seller_data: EditSeller,
+    session: DBSession
+):
+    query = select(Seller).filter(Seller.id == seller_id)
+    result = await session.execute(query)
+    seller = result.scalar_one_or_none()
+    if not seller:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    
+    
+    if seller_data.first_name:
+        seller.first_name = seller_data.first_name
+    if seller_data.last_name:
+        seller.last_name = seller_data.last_name
+    if seller_data.e_mail:
+        seller.e_mail = seller_data.e_mail
+    
+
+    await session.commit()
+    
+    return ReturnedSeller(
+        id=seller.id,
+        first_name=seller.first_name,
+        last_name=seller.last_name,
+        e_mail=seller.e_mail,
+        books=seller.seller_books 
+    )
+
 
 
 # Удаляем продавца => еще и его книги
@@ -84,4 +130,5 @@ async def delete_seller(seller_id: int, session: DBSession):
     await session.delete(deleted_seller)
     await session.commit() 
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
 
