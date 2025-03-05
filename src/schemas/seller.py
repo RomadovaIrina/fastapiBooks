@@ -23,7 +23,7 @@ class IncomingSeller(BaseSeller):
 
 class ReturnedSeller(BaseSeller):
     id: int
-    seller_books: list[ReturnedBook] = []  # Убедитесь, что поле не пустое
+    seller_books: list[ReturnedBook] = [] 
     
     @model_serializer
     def hide_password(self):
@@ -32,7 +32,7 @@ class ReturnedSeller(BaseSeller):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "e_mail": self.e_mail,
-            "books": self.seller_books  # Убедитесь, что это поле правильно сериализуется
+            "books": self.seller_books 
         }
     
 
