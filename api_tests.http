@@ -13,7 +13,7 @@ Content-Type: application/json
     "author": " Robert Martin",
     "count_pages": 300,
     "year": 2025,
-    "seller_id": 2
+    "seller_id": 1
 }
 
 ###
@@ -44,7 +44,7 @@ GET http://localhost:8000/api/v1/books/2 HTTP/1.1
 
 ###
 # Получаем данные конкретного продавца по id
-GET http://localhost:8000/api/v1/seller/2 HTTP/1.1
+GET http://localhost:8000/api/v1/seller/1 HTTP/1.1
 
 ###
 

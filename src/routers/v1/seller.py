@@ -55,18 +55,6 @@ async def get_sellers(session: DBSession):
 
 
 
-# # Получаем одного пользователя
-# @seller_router.get("/{seller_id}", response_model=ReturnedSeller)
-# async def get_seller(seller_id: int, session: DBSession):
-#     seller = await session.execute(
-#         select(Seller)
-#         .options(selectinload(Seller.seller_books))
-#     )
-#     if seller:
-#         return seller
-
-#     return Response(status_code=status.HTTP_404_NOT_FOUND)
-
 @seller_router.get("/{seller_id}", response_model=ReturnedSeller)
 async def get_seller(seller_id: int, session: DBSession):
     result = await session.execute(
