@@ -32,7 +32,7 @@ class IncomingBook(BaseBook):
 class ReturnedBook(BaseBook):
     id: int
     pages: int
-    seller_id: int
+    # seller_id: int
 
 
 # Класс для возврата массива объектов "Книга"
